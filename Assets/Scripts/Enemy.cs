@@ -25,6 +25,10 @@ public class Enemy : MonoBehaviour
     {
         if ( player != null && damage !=3)
         {
+            Vector3 dir = player.transform.position - transform.position;
+            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.AngleAxis(angle + 90, Vector3.forward);
+
             transform.position = Vector2.MoveTowards(transform.position, player.transform.position, Time.deltaTime * speed);
         }
     }
