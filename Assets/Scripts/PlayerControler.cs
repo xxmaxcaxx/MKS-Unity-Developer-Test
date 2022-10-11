@@ -16,11 +16,16 @@ public class PlayerControler : MonoBehaviour
     public Transform SpawnBulletLeft1;
     public Transform SpawnBulletLeft2;
     public Transform SpawnBulletLeft3;
+    public SpriteRenderer spriteRenderer;
+    public Sprite Damage1;
+    public Sprite Damage2;
+    public Sprite Dead;
+    int damage = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -51,6 +56,25 @@ public class PlayerControler : MonoBehaviour
             Instantiate(bulletLeft, SpawnBulletLeft1.position, transform.rotation);
             Instantiate(bulletLeft, SpawnBulletLeft2.position, transform.rotation);
             Instantiate(bulletLeft, SpawnBulletLeft3.position, transform.rotation);
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Enemy") && damage == 0)
+        {
+            spriteRenderer.sprite = Damage1;
+            damage++;
+        }
+        else if (collision.CompareTag("Enemy") && damage == 1)
+        {
+            spriteRenderer.sprite = Damage2;
+            damage++;
+        }
+        else if (collision.CompareTag("Enemy") && damage == 2)
+        {
+            spriteRenderer.sprite = Dead;
+            damage++;
+            Destroy(gameObject, 0.5f);
         }
     }
 }
