@@ -7,7 +7,15 @@ public class PlayerControler : MonoBehaviour
     [SerializeField] float moveSpeed;
     Vector2 moveInput;
     public GameObject bullet;
+    public GameObject bulletLeft;
+    public GameObject bulletRight;
     public Transform Spawnbullet;
+    public Transform SpawnBulletRight1;
+    public Transform SpawnBulletRight2;
+    public Transform SpawnBulletRight3;
+    public Transform SpawnBulletLeft1;
+    public Transform SpawnBulletLeft2;
+    public Transform SpawnBulletLeft3;
 
     // Start is called before the first frame update
     void Start()
@@ -34,6 +42,15 @@ public class PlayerControler : MonoBehaviour
         if (Input.GetButtonDown("Fire1"))
         {
             Instantiate(bullet, Spawnbullet.position, transform.rotation);
+        }
+        if (Input.GetButtonDown("Fire2"))
+        {
+            Instantiate(bulletRight, SpawnBulletRight1.position, transform.rotation);
+            Instantiate(bulletRight, SpawnBulletRight2.position, transform.rotation);
+            Instantiate(bulletRight, SpawnBulletRight3.position, transform.rotation);
+            Instantiate(bulletLeft, SpawnBulletLeft1.position, transform.rotation);
+            Instantiate(bulletLeft, SpawnBulletLeft2.position, transform.rotation);
+            Instantiate(bulletLeft, SpawnBulletLeft3.position, transform.rotation);
         }
     }
 }
