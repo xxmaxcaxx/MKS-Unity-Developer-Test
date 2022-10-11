@@ -6,6 +6,8 @@ public class PlayerControler : MonoBehaviour
 {
     [SerializeField] float moveSpeed;
     Vector2 moveInput;
+    public GameObject bullet;
+    public Transform Spawnbullet;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +29,11 @@ public class PlayerControler : MonoBehaviour
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
         {
             transform.Translate(-Vector2.up * Time.deltaTime * moveSpeed);
+        }
+
+        if (Input.GetButtonDown("Fire1"))
+        {
+            Instantiate(bullet, Spawnbullet.position, transform.rotation);
         }
     }
 }
