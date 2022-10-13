@@ -10,12 +10,14 @@ public class Enemy : MonoBehaviour
     public Sprite Damage1;
     public Sprite Damage2;
     public Sprite Dead;
+    public static float Health;
     int damage = 0;
     Animator anim;
 
     // Start is called before the first frame update
     void Start()
     {
+        Health = 90.0f;
         anim = GetComponentInChildren<Animator>();
         player = GameObject.FindGameObjectWithTag("Player");
     }
@@ -36,21 +38,26 @@ public class Enemy : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Bullet") && damage == 0){
+            Health -= 30.0f; 
             spriteRenderer.sprite = Damage1;
             damage++;
-        }else if (collision.CompareTag("Bullet") && damage == 1)
+        }
+        else if (collision.CompareTag("Bullet") && damage == 1)
         {
+            Health -= 30.0f;
             spriteRenderer.sprite = Damage2;
             damage++;
         }
         else if (collision.CompareTag("Bullet") && damage == 2)
         {
+            Health -= 30.0f;
             spriteRenderer.sprite = Dead;
             damage++;
             GameSession.points++;
             Destroy(gameObject, 0.5f);
         }
         if (collision.CompareTag("Player")){
+            Health -= 90.0f;
             spriteRenderer.sprite = null;
             anim.SetBool("DamagePlayer", true);
             damage = 3;

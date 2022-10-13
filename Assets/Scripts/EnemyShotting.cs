@@ -15,10 +15,12 @@ public class EnemyShotting : MonoBehaviour
     public GameObject bullet;
     public Transform Spawnbullet;
     private float nextfireTime = 0;
+    public static float Health;
 
     // Start is called before the first frame update
     void Start()
     {
+        Health = 90.0f;
         anim = GetComponentInChildren<Animator>();
         player = GameObject.FindGameObjectWithTag("Player");
     }
@@ -50,16 +52,19 @@ public class EnemyShotting : MonoBehaviour
     {
         if (collision.CompareTag("Bullet") && damage == 0)
         {
+            Health -= 30.0f;
             spriteRenderer.sprite = Damage1;
             damage++;
         }
         else if (collision.CompareTag("Bullet") && damage == 1)
         {
+            Health -= 30.0f;
             spriteRenderer.sprite = Damage2;
             damage++;
         }
         else if (collision.CompareTag("Bullet") && damage == 2)
         {
+            Health -= 30.0f;
             spriteRenderer.sprite = Dead;
             damage++;
             GameSession.points++;
@@ -67,6 +72,7 @@ public class EnemyShotting : MonoBehaviour
         }
         if (collision.CompareTag("Player"))
         {
+            Health -= 90.0f;
             spriteRenderer.sprite = null;
             anim.SetBool("DamagePlayer", true);
             damage = 3;

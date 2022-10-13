@@ -20,12 +20,13 @@ public class PlayerControler : MonoBehaviour
     public Sprite Damage1;
     public Sprite Damage2;
     public Sprite Dead;
+    public static float Health;
     int damage = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        Health = 90.0f;
     }
 
     // Update is called once per frame
@@ -62,16 +63,19 @@ public class PlayerControler : MonoBehaviour
     {
         if ((collision.CompareTag("Enemy") || collision.CompareTag("EnemyBullet")) && damage == 0)
         {
+            Health -= 30.0f;
             spriteRenderer.sprite = Damage1;
             damage++;
         }
         else if ((collision.CompareTag("Enemy") || collision.CompareTag("EnemyBullet")) && damage == 1)
         {
+            Health -= 30.0f;
             spriteRenderer.sprite = Damage2;
             damage++;
         }
         else if ((collision.CompareTag("Enemy") || collision.CompareTag("EnemyBullet")) && damage == 2)
         {
+            Health -= 30.0f;
             spriteRenderer.sprite = Dead;
             damage++;
             Destroy(gameObject, 0.5f);
