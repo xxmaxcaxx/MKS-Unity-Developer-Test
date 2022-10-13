@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class EnemyShotting : MonoBehaviour
 {
     [SerializeField] float speed;
     GameObject player;
@@ -12,6 +12,9 @@ public class Enemy : MonoBehaviour
     public Sprite Dead;
     int damage = 0;
     Animator anim;
+    public GameObject bullet;
+    public Transform Spawnbullet;
+    private float nextfireTime = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -23,22 +26,34 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if ( player != null && damage !=3)
+        if (player != null && damage != 3)
         {
             Vector3 dir = player.transform.position - transform.position;
             float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.AngleAxis(angle + 90, Vector3.forward);
-
-            transform.position = Vector2.MoveTowards(transform.position, player.transform.position, Time.deltaTime * speed);
+            if (dir.x <  3.5f && dir.y < 3.5f)
+            {
+                if(nextfireTime < Time.time)
+                {
+                    Instantiate(bullet, Spawnbullet.position, transform.rotation);
+                    nextfireTime = Time.time + 1.0f;
+                }
+            }
+            else
+            {
+                transform.Translate(-Vector2.up * Time.deltaTime * speed);
+            }
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Bullet") && damage == 0){
+        if (collision.CompareTag("Bullet") && damage == 0)
+        {
             spriteRenderer.sprite = Damage1;
             damage++;
-        }else if (collision.CompareTag("Bullet") && damage == 1)
+        }
+        else if (collision.CompareTag("Bullet") && damage == 1)
         {
             spriteRenderer.sprite = Damage2;
             damage++;
@@ -50,7 +65,8 @@ public class Enemy : MonoBehaviour
             GameSession.points++;
             Destroy(gameObject, 0.5f);
         }
-        if (collision.CompareTag("Player")){
+        if (collision.CompareTag("Player"))
+        {
             spriteRenderer.sprite = null;
             anim.SetBool("DamagePlayer", true);
             damage = 3;

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class EnemyBullet : MonoBehaviour
 {
     [SerializeField] float speed;
     Animator anim;
@@ -25,11 +25,11 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Enemy") || (collision.CompareTag("EnemyShotter")))
+        if (collision.CompareTag("Player"))
         {
             move = true;
             spriteRenderer.sprite = null;
-            anim.SetBool("Explosion", true);
+            anim.SetBool("DamagePlayer", true);
             Destroy(gameObject, 0.5f);
         }
         else

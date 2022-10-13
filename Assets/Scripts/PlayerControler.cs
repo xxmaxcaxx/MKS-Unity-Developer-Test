@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class PlayerControler : MonoBehaviour
 {
     [SerializeField] float moveSpeed;
@@ -60,21 +60,22 @@ public class PlayerControler : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Enemy") && damage == 0)
+        if ((collision.CompareTag("Enemy") || collision.CompareTag("EnemyBullet")) && damage == 0)
         {
             spriteRenderer.sprite = Damage1;
             damage++;
         }
-        else if (collision.CompareTag("Enemy") && damage == 1)
+        else if ((collision.CompareTag("Enemy") || collision.CompareTag("EnemyBullet")) && damage == 1)
         {
             spriteRenderer.sprite = Damage2;
             damage++;
         }
-        else if (collision.CompareTag("Enemy") && damage == 2)
+        else if ((collision.CompareTag("Enemy") || collision.CompareTag("EnemyBullet")) && damage == 2)
         {
             spriteRenderer.sprite = Dead;
             damage++;
             Destroy(gameObject, 0.5f);
+            SceneManager.LoadScene("GameOver");
         }
     }
 }
